@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About me
-permalink: /about/
+permalink: /About/
 ---
 
 <p style="text-align:justify"><font size="3">My name is Md <span style="font-weight:900">Sainur</span> Samad and I am a final year PhD student in the <span style="font-weight:900">Department of Microbiology & Immunology, University of Otago</span>, New Zealand. My PhD research,
