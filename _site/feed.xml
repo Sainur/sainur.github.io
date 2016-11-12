@@ -3,10 +3,10 @@
   <channel>
     <title>Md Sainur Samad</title>
     <description></description>
-    <link>http://localhost:4000/test_website//</link>
-    <atom:link href="http://localhost:4000/test_website//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 12 Nov 2016 20:25:22 +1300</pubDate>
-    <lastBuildDate>Sat, 12 Nov 2016 20:25:22 +1300</lastBuildDate>
+    <link>http://localhost:4000/sainur.github.io//</link>
+    <atom:link href="http://localhost:4000/sainur.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 12 Nov 2016 23:26:17 +1300</pubDate>
+    <lastBuildDate>Sat, 12 Nov 2016 23:26:17 +1300</lastBuildDate>
     <generator>Jekyll v3.3.0</generator>
     
       <item>
@@ -95,8 +95,8 @@
 &lt;p&gt;&lt;img src=&quot;https://github.com/Sainur/test_website/blob/master/Tutoria1_figure1.png?raw=true&quot; alt=&quot;paper&quot; width=&quot;700&quot; height=&quot;1000&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 10 Nov 2016 22:49:45 +1300</pubDate>
-        <link>http://localhost:4000/test_website//r/2016/11/10/welcome-copy-2.html</link>
-        <guid isPermaLink="true">http://localhost:4000/test_website//r/2016/11/10/welcome-copy-2.html</guid>
+        <link>http://localhost:4000/sainur.github.io//r/2016/11/10/welcome-copy-2.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sainur.github.io//r/2016/11/10/welcome-copy-2.html</guid>
         
         
         <category>R</category>
@@ -108,8 +108,8 @@
         <description>&lt;p&gt;Coming soon!&lt;/p&gt;
 </description>
         <pubDate>Tue, 08 Nov 2016 22:49:45 +1300</pubDate>
-        <link>http://localhost:4000/test_website//lab/2016/11/08/welcome-copy.html</link>
-        <guid isPermaLink="true">http://localhost:4000/test_website//lab/2016/11/08/welcome-copy.html</guid>
+        <link>http://localhost:4000/sainur.github.io//lab/2016/11/08/welcome-copy.html</link>
+        <guid isPermaLink="true">http://localhost:4000/sainur.github.io//lab/2016/11/08/welcome-copy.html</guid>
         
         
         <category>Lab</category>

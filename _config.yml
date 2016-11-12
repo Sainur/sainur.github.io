@@ -15,7 +15,7 @@ description:
 #Write an awesome description for your new site here.
 #You can edit this line in _config.yml. It will appear in your document head meta
 #(forGoogle search results) and in your feed.xml site description.
-baseurl: "/test_website/" # the subpath of your site, e.g. /blog
+baseurl: "/sainur.github.io/" # the subpath of your site, e.g. /blog
 url: "https://github.com/Sainur" # the base hostname & protocol for your site
 twitter_username:
 github_username:  Sainur
