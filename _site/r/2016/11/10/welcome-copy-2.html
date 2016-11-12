@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>How to make multiple line graphs with error bars using ggplot in R!</title>
+  <meta name="description" content="In this tutorial, I would like to show you how to make multiple line graphs with error bars in R. To understand this tutorial, you must have at least some ba...">
+
+  <link rel="stylesheet" href="/test_website//css/main.css">
+  <link rel="canonical" href="http://localhost:4000/test_website//r/2016/11/10/welcome-copy-2.html">
+  <link rel="alternate" type="application/rss+xml" title="Md Sainur Samad" href="http://localhost:4000/test_website//feed.xml">
+</head>
+
+
+  <body>
+      <div class="outer">
+        <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/test_website//">Md Sainur Samad</a>
+
+  </div>
+
+  <div class="header-badge">
+    <a href="/test_website//">
+        <img src="/test_website/assets/headshot.jpg" />
+    </a>
+  </div>
+
+</header>
+
+
+        <div class="page-content">
+          <div class="wrapper">
+            <article class="post card" itemscope itemtype="http://schema.org/BlogPosting">
+ <div class="card-content">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">How to make multiple line graphs with error bars using ggplot in R!</h1>
+    <p class="post-meta"><time datetime="2016-11-10T22:49:45+13:00" itemprop="datePublished">Nov 10, 2016</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>In this tutorial, I would like to show you how to make multiple line graphs with error bars in R. To understand this tutorial, you must have at least some basic knowledge about R. You may need to download this data file (Data_file_for_line_graphs.csv) from my Github page (https://raw.githubusercontent.com/Sainur/test_website/master/Data_file_for_line_graphs.csv) and save it to your local drive. Another easy option is: just call the “import” function and show the weblink. <br />
+<br />
+<strong>Very brief description about the data set:</strong>
+<br /><em>Soil samples were treated with two levels of urea and two levels of moisture content representing 4 different treatments:</em>
+<br /><em>1) Urea+High_moisture content;</em>
+<br /><em>2) Urea+Low_moisture content;</em>
+<br /><em>3) No_Urea+High_moisture content;</em>
+<br /><em>4) No_Urea+Low_moisture content</em><br />
+<em>Soil samples were incubated for 63 days in tension tables. DNA was extracted for next generation sequencing (Illumina MiSeq) at different time points (Day 0, 7, 14, 21, 35 and 63). The sequencing data was processed in Qiime and then exported as a Biom format for further processing in R. The data file we are using here is a subset from a Biom file. There are 6 columns in this data set. The first column shows OTU_name (which represents organismal classification at genus or family level, you may simply consider these as different bacteria). The second, third, fourth, fifth and sixth columns represent Abundance, Day (0, 7, 14, 21, 35 and 63), Treatment1, Treatment2, and Combined_Treatment12, respectively.</em></p>
+
+<p><br />
+<strong>Step 1: Install and run R packages (ggplot, Rmisc, lattice, plyr, rio):</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">install</span><span class="p">.</span><span class="nf">packages</span> <span class="p">(</span><span class="s2">"ggplot2"</span><span class="p">)</span>
+<span class="n">install</span><span class="p">.</span><span class="nf">packages</span> <span class="p">(</span><span class="s2">"Rmisc"</span><span class="p">)</span>
+<span class="n">install</span><span class="p">.</span><span class="nf">packages</span> <span class="p">(</span><span class="s2">"lattice"</span><span class="p">)</span>
+<span class="n">install</span><span class="p">.</span><span class="nf">packages</span> <span class="p">(</span><span class="s2">"plyr"</span><span class="p">)</span>
+<span class="n">install</span><span class="p">.</span><span class="nf">packages</span> <span class="p">(</span><span class="s2">"rio"</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="s2">"ggplot2"</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="s2">"Rmisc"</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="s2">"lattice"</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="s2">"plyr"</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="s2">"rio"</span><span class="p">)</span></code></pre></figure>
+
+<p><strong>Step 2: Import the data file (Data_file_for_line_graphs.csv) from your local drive. Make sure you are showing the full file path properly. (e.g. “/Users/Desktop/…/Data_file_for_line_graphs.csv”)</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Data_file</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="p">.</span><span class="nf">csv</span><span class="p">(</span><span class="s2">"/Users/sainur/Desktop/Data_file_for_line_graphs.csv"</span><span class="p">,</span><span class="n">fill</span> <span class="o">=</span> <span class="no">TRUE</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="no">TRUE</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">","</span><span class="p">)</span>
+<span class="c1">#OR, you can use the below command to import the file from the web.</span>
+<span class="no">Data_file</span> <span class="o">&lt;-</span> <span class="n">import</span><span class="p">(</span><span class="s2">"https://raw.githubusercontent.com/Sainur/test_website/master/Data_file_for_line_graphs.csv"</span><span class="p">)</span></code></pre></figure>
+
+<p>If you want to see the first 10 rows of this data file (Data_file_for_line_graphs.csv) then run this command:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">head</span> <span class="p">(</span><span class="no">Data_file</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>OUT_name          Abundance Day   Treatment1    Treatment2  Combined_Treatment12
+1  01: g_Sporosarcina         4   0    With urea High moisture     Urea+Low_moisture
+2  01: g_Sporosarcina         4   0    With urea  Low moisture    Urea+High_moisture
+3  01: g_Sporosarcina         2   0    With urea  Low moisture    Urea+High_moisture
+4  01: g_Sporosarcina         2   0    With urea High moisture     Urea+Low_moisture
+5  01: g_Sporosarcina         2   0    With urea  Low moisture    Urea+High_moisture
+6  01: g_Sporosarcina         1   0    With urea High moisture     Urea+Low_moisture
+7  01: g_Sporosarcina         1   0 Without urea  Low moisture No_Urea+High_moisture
+8  01: g_Sporosarcina         1   0 Without urea  Low moisture No_Urea+High_moisture
+9  01: g_Sporosarcina         1   0 Without urea  Low moisture No_Urea+High_moisture
+10 01: g_Sporosarcina         0   0 Without urea High moisture  No_Urea+Low_moisture
+</code></pre>
+</div>
+
+<p><strong>Step 3: We will now call the summary function (i.e. summarySE)</strong>
+<br /><strong>Note:</strong> <em>summarySE provides the standard deviation, standard error of the mean, and a (default 95%) confidence interval</em></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Data_file_summary</span> <span class="o">&lt;-</span> <span class="n">summarySE</span><span class="p">(</span><span class="no">Data_file</span><span class="p">,</span> <span class="n">measurevar</span><span class="o">=</span><span class="s2">"Abundance"</span><span class="p">,</span> <span class="n">groupvars</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">"Combined_Treatment12"</span><span class="p">,</span><span class="s2">"Day"</span><span class="p">,</span><span class="s2">"OUT_name"</span><span class="p">,</span> <span class="s2">"Treatment1"</span><span class="p">,</span> <span class="s2">"Treatment2"</span><span class="p">))</span></code></pre></figure>
+
+<p>If you want to see the first 10 rows of this data file (Data_file_for_line_graphs.csv) then run this command:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">head</span> <span class="p">(</span><span class="no">Data_file_summary</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></code></pre></figure>
+
+<p><strong>Step 4: Let’s make the multiple line graphs using the summarySE output:</strong></p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">pd</span> <span class="o">&lt;-</span> <span class="n">position_dodge</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mo">001</span><span class="p">)</span>
+
+<span class="nb">p</span><span class="o">=</span><span class="n">ggplot</span><span class="p">(</span><span class="no">Data_file_summary</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="no">Day</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="no">Abundance</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="no">Combined_Treatment12</span><span class="p">))</span><span class="o">+</span>
+<span class="n">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="no">OUT_name</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s2">"free_y"</span><span class="p">)</span><span class="o">+</span>
+<span class="n">geom_errorbar</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">ymin</span><span class="o">=</span><span class="no">Abundance</span><span class="o">-</span><span class="n">se</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="no">Abundance</span><span class="o">+</span><span class="n">se</span><span class="p">),</span> <span class="n">colour</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">pd</span><span class="p">)</span><span class="o">+</span>
+<span class="n">geom_line</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">linetype</span><span class="o">=</span><span class="no">Treatment1</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span><span class="no">Treatment2</span><span class="p">),</span><span class="n">position</span><span class="o">=</span><span class="n">pd</span><span class="p">)</span><span class="o">+</span>
+<span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="no">Treatment2</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="no">Treatment2</span><span class="p">))</span><span class="o">+</span>
+
+<span class="n">xlab</span><span class="p">(</span><span class="s2">"Day"</span><span class="p">)</span><span class="o">+</span>
+<span class="n">scale_x_continuous</span><span class="p">()</span><span class="o">+</span>
+<span class="n">ylab</span><span class="p">(</span><span class="s2">"Absolute abundance"</span><span class="p">)</span><span class="o">+</span>
+<span class="n">expand_limits</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span>                        <span class="c1"># Expand y range</span>
+<span class="n">scale_y_continuous</span><span class="p">()</span><span class="o">+</span>        
+<span class="n">theme_bw</span><span class="p">()</span><span class="o">+</span>
+<span class="n">theme</span><span class="p">(</span><span class="n">panel</span><span class="p">.</span><span class="nf">grid</span><span class="p">.</span><span class="nf">major</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">(),</span> <span class="n">panel</span><span class="p">.</span><span class="nf">grid</span><span class="p">.</span><span class="nf">minor</span> <span class="o">=</span> <span class="n">element_blank</span><span class="p">(),</span>
+<span class="n">strip</span><span class="p">.</span><span class="nf">text</span><span class="p">.</span><span class="nf">x</span> <span class="o">=</span> <span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  
+<span class="n">pp</span><span class="o">=</span> <span class="nb">p</span><span class="o">+</span><span class="n">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="s2">"#EF6C00"</span><span class="p">,</span> <span class="s2">"#0000FF"</span><span class="p">))</span>
+<span class="c1">#pp= p+scale_color_manual(values=c("#111111", "gray70"))  # for Black and gray</span>
+<span class="n">pp</span>
+<span class="c1">#You may save the image file in different sizes and formats (.pdf, jpg, png) in your computer.</span>
+<span class="n">ggsave</span><span class="p">(</span><span class="s2">"/Users/Sainur/Desktop/Line_graph.pdf"</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="https://github.com/Sainur/test_website/blob/master/Tutoria1_figure1.png?raw=true" alt="paper" width="700" height="1000" /></p>
+
+  </div>
+</div>
+</article>
+
+          </div>
+        </div>
+
+        <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <span class="footer-heading">Md Sainur Samad</span>
+
+  </div>
+
+</footer>
+
+      </div>
+  </body>
+  
+</html>
