@@ -44,4 +44,4 @@ resulted in a publication (<a href="http://onlinelibrary.wiley.com/doi/10.1111/1
 
 <br>
 
-<p style="text-align:justify"><font size="3">So far, I have been working in different labs that enabled me to build up my research career for which I am thankful. The intention to make this website is to demonstrate and share some of my knowledge and interests. This is an initial stage of my website and more updates are coming. Thanks for visiting!</font></p>
+<p style="text-align:justify"><font size="3">So far, I have been working in different labs that enabled me to build up my research career for which I am thankful. The intention to make this website is to demonstrate and share some of my knowledge and interests. This is an initial stage of my website and more updates are coming. Thanks for visiting!!</font></p>
