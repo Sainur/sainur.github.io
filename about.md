@@ -6,7 +6,7 @@ permalink: /About/
 
 <p style="text-align:justify"><font size="3">My name is Md <span style="font-weight:900">Sainur</span> Samad and I am a postdoctoral researcher at the <span style="font-weight:900"><a href="https://nioo.knaw.nl/en">Netherlands Institute of Ecology (NIOO)</a>. I completed my PhD from the <span style="font-weight:900">Department of Microbiology & Immunology, University of Otago</span>, New Zealand. My PhD research,
 under the supervision of <span style="font-weight:900">Dr Sergio E. Morales</span>, focused on soil microbial ecology within agroecosystems (specifically pastures) with a focus on nitrogen cycling and N<sub>2</sub>O emissions.</font></p>
-<p><br /></p>
+
 <p style="text-align:justify"><font size="3"> I completed a Master degree in <span style="font-weight:900">Applied Biotechnology</span> at Uppsala University, Sweden under the
 supervision of <span style="font-weight:900">Prof. Stefan Bertilsson</span> in the area of methanotroph dynamics for controlling
 methane (CH<sub>4</sub>) emissions. Afterwards, I worked as a research assistant in the dept. of Ecology &
