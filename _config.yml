@@ -27,4 +27,4 @@ google_analytics: UA-87316246-1
 footer_left:
 footer_right:
 # Build settings
-markdown: kramdown
+markdown: 
